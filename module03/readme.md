@@ -22,6 +22,11 @@
 ```shell
 # 输入命令查看容器 <container id> 的进程的PID
 docker inspect -f {{.State.Pid}}  <container id>
+
+# 查看容器IP：
+sudo nsenter -t $PID -n ip a
+
+
 # 连接到这个容器，格式:  
 nsenter --target    $PID   --mount --uts   --ipc   --net   --pid
 ```
