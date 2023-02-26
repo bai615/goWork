@@ -37,3 +37,32 @@ namespace/istio-app created
 $ kubectl label ns istio-app istio-injection=enabled
 namespace/istio-app labeled
 ```
+
+
+## 链路追踪 Tracing
+
+安装 Jaeger
+```
+kubectl apply -f tracing-jaeger.yaml
+```
+
+配置采样比例
+```
+kubectl edit configmap istio -n istio-system
+
+```
+
+```
+apiVersion: v1
+data:
+  mesh: |-
+    accessLogFile: /dev/stdout
+    defaultConfig:
+      discoveryAddress: istiod.istio-system.svc:15012
+      proxyMetadata: {}
+      tracing:
+        sampling: 100
+        zipkin:
+          address: zipkin.istio-system:9411
+    enablePrometheusMerge: true
+```
